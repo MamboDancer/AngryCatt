@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb2d;
     private Camera mainCamera;
     private Vector2 startPosition;
+    public GameObject dot;
     private bool canDrag = true;
 
     void Start()
@@ -27,8 +28,10 @@ public class Player : MonoBehaviour
     private void OnMouseDown()
     {
       float playerSpeed = rb2d.velocity.magnitude;
+
       if(playerSpeed < minSpeedToDrag)
       {
+        Instantiate(dot, this.transform.position, Quaternion.identity);
         canDrag = true;
         rb2d.isKinematic = true;
         rb2d.velocity = Vector2.zero;
@@ -46,6 +49,7 @@ public class Player : MonoBehaviour
         rb2d.isKinematic = false;
         rb2d.AddForce(direction * forceValue);
         canDrag = false;
+        Destroy(dot);
       }
     }
 
